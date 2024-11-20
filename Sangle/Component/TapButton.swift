@@ -20,8 +20,7 @@ struct TapButton: View {
     let text: String
     let type: TapButtonType
     let size: TapButtonSize
-    
-    @Binding var disabled: Bool
+    let disabled: Bool
     
     var body: some View {
         Button(action: action) {
@@ -45,5 +44,5 @@ struct TapButton: View {
 }
 
 #Preview {
-    TapButton(action: {}, text: "Test", type: .primary, size: .large, disabled: .constant(true))
+    TapButton(action: {}, text: "Test", type: .primary, size: .large, disabled: true)
 }
