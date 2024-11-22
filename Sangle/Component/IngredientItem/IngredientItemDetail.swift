@@ -56,27 +56,10 @@ struct IngredientItemDetail: View {
             ForEach(content.indices, id: \.self) { index in
                 let item = content[index]
                 
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text(item.name)
-                            .typography(.body1, color: .Color.black)
-                        
-                        Text(item.category)
-                            .typography(.body2, color: .Gray._500)
-                    }
-                    
-                    Spacer()
-
-                    Text(item.date.toKoreanDateString())
-                        .typography(.body2, color: .Gray._500)
-                }
+                IngredientInfo(content: item)
                 
                 if index != content.count - 1 {
-                    Rectangle()
-                        .fill(Color.Gray._350)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 1)
-                        .radius(12)
+                    RoundedDivider(color: .Gray._350)
                 }
             }
         }
