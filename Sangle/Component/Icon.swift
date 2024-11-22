@@ -8,19 +8,25 @@
 import SwiftUI
 
 struct Icon: View {
-    let size: CGFloat
-    let name: String
-    let color: Color
-    
-    var body: some View {
-        Image(name)
-            .renderingMode(.template)
-            .resizable()
-            .frame(width: size, height: size)
-            .foregroundStyle(color)
-    }
+   let size: CGFloat
+   let name: String
+   let color: Color
+   
+   init(_ name: String, size: CGFloat = 24, color: Color = .black) {
+       self.name = name
+       self.size = size
+       self.color = color
+   }
+   
+   var body: some View {
+       Image(name)
+           .renderingMode(.template)
+           .resizable()
+           .frame(width: size, height: size)
+           .foregroundStyle(color)
+   }
 }
 
 #Preview {
-    Icon(size: 24, name: "Icon/arrow_back", color: .black)
+   Icon("Icon/arrow_back", size: 24, color: .black)
 }

@@ -20,7 +20,7 @@ struct Header: View {
         HStack(spacing: 0) {
             if type == .back {
                 Button(action: action) {
-                    Icon(size: 24, name: "Icon/arrow_back", color: .Color.black)
+                    Icon("Icon/arrow_back", size: 24, color: .Color.black)
                 }
             } else {
                 Rectangle()
@@ -39,7 +39,7 @@ struct Header: View {
             
             if type == .close {
                 Button(action: action) {
-                    Icon(size: 24, name: "Icon/close", color: .Color.black)
+                    Icon("Icon/close", size: 24, color: .Color.black)
                 }
             } else {
                 Rectangle()
