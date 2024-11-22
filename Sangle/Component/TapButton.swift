@@ -37,7 +37,7 @@ struct TapButton: View {
                     size == .small ? 8 : 14
                 )
                 .background(disabled ? Color(hex: "D6D6D7") : (type == .primary ? .Color.green : Color(hex: "0ABD4B", alpha: 0.55)))
-                .clipShape(RoundedRectangle(cornerRadius: size == .small ? 12 : 16))
+                .radius(size == .small ? 12 : 16)
         }
         .disabled(disabled)
     }

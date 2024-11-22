@@ -48,6 +48,7 @@ struct BottomBarItem: View {
                     .typography(.body1, color: isCurrent ? .Color.black : .Gray._350)
             }
             .frame(maxWidth: .infinity)
+
         }
     }
 }

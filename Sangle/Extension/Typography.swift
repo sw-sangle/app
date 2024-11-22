@@ -2,12 +2,18 @@ import SwiftUI
 
 struct Typography {
     enum Style {
-        case title1, title2, subtitle1, subtitle1Emphasized, subtitle2, subtitle2Emphasized, body1, body1Emphasized, body2, body2Emphasized
+        case title1,
+             title2, title2Emphasized,
+             title3, title3Emphasized,
+             subtitle1, subtitle1Emphasized,
+             subtitle2, subtitle2Emphasized,
+             body1, body1Emphasized, body2, body2Emphasized
         
         var fontSize: CGFloat {
             switch self {
             case .title1: return 24
-            case .title2: return 20
+            case .title2, .title2Emphasized: return 22
+            case .title3, .title3Emphasized: return 20
             case .subtitle1, .subtitle1Emphasized: return 18
             case .subtitle2, .subtitle2Emphasized: return 16
             case .body1, .body1Emphasized: return 14
@@ -18,7 +24,8 @@ struct Typography {
         var lineHeight: CGFloat {
             switch self {
             case .title1: return 32
-            case .title2: return 28
+            case .title2, .title2Emphasized: return 30
+            case .title3, .title3Emphasized: return 28
             case .subtitle1, .subtitle1Emphasized: return 24
             case .subtitle2, .subtitle2Emphasized: return 22
             case .body1, .body1Emphasized: return 20
@@ -34,9 +41,9 @@ struct Typography {
         
         var fontName: String {
             switch self {
-            case .title1, .title2, .subtitle1Emphasized, .subtitle2Emphasized, .body1Emphasized, .body2Emphasized:
+            case .title1, .title2Emphasized, .title3Emphasized, .subtitle1Emphasized, .subtitle2Emphasized, .body1Emphasized, .body2Emphasized:
                 return "WantedSans-SemiBold"
-            case .subtitle1, .subtitle2, .body1, .body2:
+            case .title2, .title3, .subtitle1, .subtitle2, .body1, .body2:
                 return "WantedSans-Medium"
             }
         }
