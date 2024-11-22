@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum HeaderType {
-    case back, close
+    case back, close, plain, title
 }
 
 struct Header: View {
@@ -28,10 +28,12 @@ struct Header: View {
                     .frame(width: 24, height: 24)
             }
             
-            Spacer()
+            if type != .title {
+                Spacer()
+            }
             
             Text(title)
-                .typography(.subtitle2Emphasized, color: .Color.black)
+                .typography(type == .title ? .title1 : .subtitle1Emphasized, color: .Color.black)
             
             Spacer()
             
@@ -52,5 +54,10 @@ struct Header: View {
 }
 
 #Preview {
-    Header(title: "Text", action: {}, type: .close)
+    VStack {
+        Header(title: "Text", action: {}, type: .close)
+        Header(title: "Text", action: {}, type: .back)
+        Header(title: "Text", action: {}, type: .plain)
+        Header(title: "Text", action: {}, type: .title)
+    }
 }
