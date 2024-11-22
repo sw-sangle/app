@@ -18,6 +18,26 @@ struct IngredientItem: View {
     let type: IngredientItemType
     
     let action: () -> Void
+    let white: Bool
+    let backgroundColor: Color?
+    
+    init(
+        icon: String,
+        name: String,
+        category: String,
+        type: IngredientItemType,
+        action: @escaping () -> Void,
+        white: Bool = false,
+        backgroundColor: Color = Color.Gray._150
+    ) {
+        self.icon = icon
+        self.name = name
+        self.category = category
+        self.type = type
+        self.action = action
+        self.white = white
+        self.backgroundColor = backgroundColor
+    }
     
     
     var body: some View {
@@ -28,19 +48,19 @@ struct IngredientItem: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 Text(name)
-                    .typography(.subtitle1Emphasized, color: .Color.black)
+                    .typography(.subtitle1Emphasized, color: white ? .Color.white : .Color.black)
                 
                 Text(category)
-                    .typography(.body1, color: .Gray._500)
+                    .typography(.body1, color: white ? .Gray._150 : .Gray._500)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
             Button(action: action) {
-                Icon(type == .edit ? "Icon/edit" : "Icon/chevron_forward", size: 24, color: Color(hex: "#1c1b1f"))
+                Icon(type == .edit ? "Icon/edit" : "Icon/chevron_forward", size: 24, color: white ? .Gray._100 : Color(hex: "#1c1b1f"))
             }
         }
         .padding(16)
-        .background(Color.Gray._150)
+        .background(backgroundColor)
         .radius(12)
     }
 }

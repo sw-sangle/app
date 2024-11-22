@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SangleApp: App {
+    @State private var bottomBarMacro = BottomBarMacro()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(bottomBarMacro)
         }
     }
 }

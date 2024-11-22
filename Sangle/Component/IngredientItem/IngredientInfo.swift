@@ -7,19 +7,25 @@
 
 import SwiftUI
 
+enum IngredientInfoType {
+    case plain, detail, warning
+}
+
 struct IngredientInfo: View {
     let content: IngredientModel
-    let detail: Bool
+    let type: IngredientInfoType
     let expirationDate: Date?
+    let warningDate: Int?
    
-    init(content: IngredientModel, detail: Bool = false, expirationDate: Date? = nil) {
+    init(content: IngredientModel, type: IngredientInfoType = .plain, expirationDate: Date? = nil, warningDate: Int? = nil) {
         self.content = content
-        self.detail = detail
+        self.type = type
         self.expirationDate = expirationDate
+        self.warningDate = warningDate
     }
     
     var body: some View {
-        if !detail {
+        if type != .detail {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(content.name)
@@ -31,14 +37,25 @@ struct IngredientInfo: View {
                 
                 Spacer()
                 
-                Text(content.date.toKoreanDateString())
-                    .typography(.body2, color: .Gray._500)
+                if type == .warning {
+                    if let warningDate {
+                        Text("추천 소비기한\n\(warningDate)일 남음")
+                            .typography(.body2, color: .Color.red)
+                    }
+                } else {
+                    if let date = content.date {
+                        Text(date.toKoreanDateString())
+                            .typography(.body2, color: .Gray._500)
+                    }
+                }
             }
         } else {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(content.date.toKoreanDateString())
-                        .typography(.body2Emphasized, color: .Gray._500)
+                    if let date = content.date {
+                        Text(date.toKoreanDateString())
+                            .typography(.body2Emphasized, color: .Gray._500)
+                    }
                     
                     Text(content.name)
                         .typography(.subtitle1Emphasized, color: .Color.black)
@@ -62,6 +79,8 @@ struct IngredientInfo: View {
     VStack {
         IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)))
         
-        IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), detail: true, expirationDate: Date.from(year: 2024, month: 12, day: 5))
+        IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), type: .detail, expirationDate: Date.from(year: 2024, month: 12, day: 5))
+        
+        IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), type: .warning, warningDate: 3)
     }
 }

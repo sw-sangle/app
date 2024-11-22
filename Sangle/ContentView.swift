@@ -8,17 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(BottomBarMacro.self) private var bottomBarMacro
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        @Bindable var bottomBarMacro = bottomBarMacro
+        
+        ZStack {
+            TabView(selection: $bottomBarMacro.tab) {
+                Group {
+                    HomeScreen()
+                        .tag(BottomBar.Tab.home)
+                    
+                    AnalysisScreen()
+                        .tag(BottomBar.Tab.analysis)
+                    
+                    MyPageScreen()
+                        .tag(BottomBar.Tab.mypage)
+                }
+                .toolbar(.hidden, for: .tabBar)
+            }
+            
+            VStack {
+                Spacer()
+                BottomBar(macro: bottomBarMacro)
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .environment(BottomBarMacro())
 }

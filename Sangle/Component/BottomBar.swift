@@ -7,22 +7,24 @@
 
 import SwiftUI
 
-enum BottomBarTab {
-    case home, analysis, mypage
-}
-
 struct BottomBar : View {
-    @Binding var tab: BottomBarTab
+    @Bindable var macro: BottomBarMacro
+    
+    enum Tab {
+        case home, analysis, mypage
+    }
     
     var body: some View {
         HStack(spacing: 0) {
-            BottomBarItem(icon: "food_bank", text: "홈", current: .home, tab: $tab)
             
-            BottomBarItem(icon: "bar_chart", text: "소비 분석", current: .analysis, tab: $tab)
+            BottomBarItem(icon: "food_bank", text: "홈", current: .home, macro: macro)
             
-            BottomBarItem(icon: "person", text: "마이페이지", current: .mypage, tab: $tab)
+            BottomBarItem(icon: "bar_chart", text: "소비 분석", current: .analysis, macro: macro)
+            
+            BottomBarItem(icon: "person", text: "마이페이지", current: .mypage, macro: macro)
         }
         .padding(.vertical, 4)
+        .background(Color.background)
     }
 }
 
@@ -30,16 +32,16 @@ struct BottomBarItem: View {
     let icon: String
     let text: String
     
-    let current: BottomBarTab
-    @Binding var tab: BottomBarTab
+    let current: BottomBar.Tab
+    @Bindable var macro: BottomBarMacro
     
     var isCurrent: Bool {
-        return tab == current
+        return macro.tab == current
     }
     
     var body: some View {
         Button(action: {
-            tab = current
+            macro.tab = current
         }) {
             VStack {
                 Icon("Icon/\(icon)", size: 24, color: isCurrent ? .Color.black : .Gray._350)
@@ -55,6 +57,6 @@ struct BottomBarItem: View {
 
 #Preview {
     VStack {
-        BottomBar(tab: .constant(.home))
+        BottomBar(macro: BottomBarMacro())
     }
 }

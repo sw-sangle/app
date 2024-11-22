@@ -11,5 +11,11 @@ struct IngredientModel: Hashable {
     let name: String
     let category: String
     
-    let date: Date
+    let date: Date?
+    
+    init(name: String, category: String, date: Date? = nil) {
+        self.name = name
+        self.category = category
+        self.date = date
+    }
 }

@@ -13,19 +13,31 @@ enum HeaderType {
 
 struct Header: View {
     let title: String
-    let action: () -> Void
+    let action: (() -> Void)?
     let type: HeaderType
+    
+    init(title: String, action: (() -> Void)? = nil, type: HeaderType = .title) {
+        self.title = title
+        self.action = action
+        self.type = type
+    }
     
     var body: some View {
         HStack(spacing: 0) {
             if type == .back {
-                Button(action: action) {
+                Button(action: {
+                    if let action {
+                        action()
+                    }
+                }) {
                     Icon("Icon/arrow_back", size: 24, color: .Color.black)
                 }
             } else {
-                Rectangle()
-                    .fill(.clear)
-                    .frame(width: 24, height: 24)
+                if type != .title {
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: 24, height: 24)
+                }
             }
             
             if type != .title {
@@ -38,7 +50,11 @@ struct Header: View {
             Spacer()
             
             if type == .close {
-                Button(action: action) {
+                Button(action: {
+                    if let action {
+                        action()
+                    }
+                }) {
                     Icon("Icon/close", size: 24, color: .Color.black)
                 }
             } else {
@@ -58,6 +74,6 @@ struct Header: View {
         Header(title: "Text", action: {}, type: .close)
         Header(title: "Text", action: {}, type: .back)
         Header(title: "Text", action: {}, type: .plain)
-        Header(title: "Text", action: {}, type: .title)
+        Header(title: "Text", type: .title)
     }
 }
