@@ -106,14 +106,19 @@ struct BarcodeScannerPreview: View {
     @Binding var scannedCode: String
     
     var body: some View {
-        VStack {
-            Text("스캔된 바코드: \(scannedCode)")
-                .padding()
-            
+        ZStack {
             CameraPreview { code in
                 self.scannedCode = code
             }
-            .frame(height: UIScreen.main.bounds.height * 0.7)
+            
+            VStack {
+                Image("code_guideline")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 176, height: 100)
+                    .clipped()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
     }
 }

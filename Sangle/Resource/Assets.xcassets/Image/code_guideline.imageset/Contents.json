@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "code_area.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

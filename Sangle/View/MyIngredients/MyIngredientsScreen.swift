@@ -20,40 +20,34 @@ struct MyIngredientsScreen: View {
     
     var body: some View {
         VStack {
-            Header(title: "내 식재료", action: { path.removeLast() }, type: .back)
+            Header(title: "내 식재료", action: { path = NavigationPath() }, type: .back)
             ZStack {
-                VStack {
-                    ScrollView(.vertical) {
-                        VStack(spacing: 0) {
-                            HStack(spacing: 12) {
-                                filter
-                                storageTips
-                            }
-                            .padding(.horizontal)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            
-                            VStack(spacing: 14) {
-                                ForEach(1...ingredientsCount, id: \.self) { index in
-                                    IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), type: .detail, expirationDate: Date.from(year: 2024, month: 12, day: 5))
-                                    if (index < ingredientsCount) {
-                                        RoundedDivider(height: 1)
-                                    }
+                ScrollView(.vertical) {
+                    VStack(spacing: 0) {
+                        HStack(spacing: 12) {
+                            filter
+                            storageTips
+                        }
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        
+                        VStack(spacing: 14) {
+                            ForEach(1...ingredientsCount, id: \.self) { index in
+                                IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), type: .detail, expirationDate: Date.from(year: 2024, month: 12, day: 5))
+                                if (index < ingredientsCount) {
+                                    RoundedDivider(height: 1)
                                 }
                             }
-                            .padding(.horizontal)
                         }
+                        .padding(.horizontal)
                     }
-                    
-                    Spacer()
-                    
-                    scanFAB
-                        .padding(.bottom, 14)
                 }
-                .padding(.bottom, 60)
+                
+                scanFAB
+                    .padding(.bottom, 14)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-
     }
     
     var filter: some View {
