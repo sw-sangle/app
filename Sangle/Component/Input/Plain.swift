@@ -12,16 +12,28 @@ extension Input {
         @Binding var text: String
         let placeholder: String
         let filter: (String) -> Bool
+        let keyboardType: UIKeyboardType
+        let disabled: Bool
+        
+        init(text: Binding<String>, placeholder: String, filter: @escaping (String) -> Bool, keyboardType: UIKeyboardType = .default, disabled: Bool = false) {
+           self._text = text
+           self.placeholder = placeholder
+           self.filter = filter
+           self.keyboardType = keyboardType
+            self.disabled = disabled
+        }
        
        @FocusState var isFocused: Bool
         
         var body: some View {
             HStack(spacing: 16) {
                 TextField("", text: $text)
+                    .keyboardType(keyboardType)
+                    .disabled(disabled)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .placeholder(when: text.isEmpty) {
-                        Text(placeholder).typography(.body1, color: .Gray._500)
+                        Text(placeholder).typography(.body1, color: disabled ? .Gray._250 : .Gray._500)
                     }
                     .focused($isFocused)
                     .typography(.body1, color: .Color.black)
@@ -61,5 +73,5 @@ extension Input {
 #Preview {
     @Previewable @State var text: String = ""
     
-    Input.Plain(text: $text, placeholder: "Placeholder", filter: { $0.contains("s")})
+    Input.Plain(text: $text, placeholder: "Placeholder", filter: { $0.contains("s")}, disabled: true)
 }

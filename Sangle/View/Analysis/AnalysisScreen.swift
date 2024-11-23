@@ -67,7 +67,7 @@ struct AnalysisScreen: View {
                     .typography(.body2, color: Color.Gray._500)
             }
             Spacer()
-            TapButton(action: {}, text: "제외하기", type: .primary, size: .small, disabled: false)
+            TapButton(action: {}, text: "제외하기", size: .small, disabled: false)
         }
         .padding(16)
         .frame(maxWidth: .infinity)

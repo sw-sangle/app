@@ -30,7 +30,7 @@ struct Header: View {
                         action()
                     }
                 }) {
-                    Icon("Icon/arrow_back", size: 24, color: .Color.black)
+                    Icon("Icon/arrow_backward", size: 24, color: .Color.black)
                 }
             } else {
                 if type != .title {

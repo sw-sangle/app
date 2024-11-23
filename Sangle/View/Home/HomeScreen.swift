@@ -136,7 +136,7 @@ struct HomeScreen: View {
                .clipped()
                .radius(12)
             
-            TapButton(action: {}, text: "바로가기", type: .primary, size: .large, disabled: false, fill: true)
+            TapButton(action: {}, text: "바로가기", size: .large, disabled: false, fill: true)
         }
         .padding(16)
         .background(Color.Gray._150)
