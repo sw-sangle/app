@@ -17,15 +17,17 @@ struct TapButton: View {
    let size: TapButtonSize
    let disabled: Bool
    let fill: Bool
+    let isGold: Bool
    
    @State private var isPressed: Bool = false
    
-   init(action: @escaping () -> Void, text: String, size: TapButtonSize, disabled: Bool, fill: Bool = false) {
+    init(action: @escaping () -> Void, text: String, size: TapButtonSize, disabled: Bool, fill: Bool = false, isGold: Bool = false) {
        self.action = action
        self.text = text
        self.size = size
        self.disabled = disabled
        self.fill = fill
+       self.isGold = isGold
    }
    
    var body: some View {
@@ -36,7 +38,7 @@ struct TapButton: View {
                content
            }
        }
-       .buttonStyle(PressableButtonStyle(disabled: disabled, size: size, fill: fill))
+       .buttonStyle(PressableButtonStyle(disabled: disabled, size: size, fill: fill, isGold: isGold))
        .disabled(disabled)
    }
    
@@ -61,6 +63,7 @@ struct PressableButtonStyle: ButtonStyle {
     let disabled: Bool
     let size: TapButtonSize
     let fill: Bool
+    let isGold: Bool
    
     func makeBody(configuration: Configuration) -> some View {
         if fill {
@@ -68,7 +71,7 @@ struct PressableButtonStyle: ButtonStyle {
                 .frame(maxWidth: .infinity)
                 .background(
                     disabled ? Color(hex: "D6D6D7") :
-                        configuration.isPressed ? Color(hex: "#0ABD4B", alpha: 0.55) : .Color.green
+                        configuration.isPressed ? isGold ? Color(hex: "#F6C650", alpha: 0.55) : Color(hex: "#0ABD4B", alpha: 0.55) : isGold ? .Color.gold : .Color.green
                 )
                 .radius(size == .small ? 12 : 16)
                 .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
@@ -76,7 +79,7 @@ struct PressableButtonStyle: ButtonStyle {
             configuration.label
                 .background(
                     disabled ? Color(hex: "D6D6D7") :
-                        configuration.isPressed ? Color(hex: "#0ABD4B", alpha: 0.55) : .Color.green
+                        configuration.isPressed ? isGold ? Color(hex: "#F6C650", alpha: 0.55) : Color(hex: "#0ABD4B", alpha: 0.55) : isGold ? .Color.gold : .Color.green
                 )
                 .radius(size == .small ? 12 : 16)
                 .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)

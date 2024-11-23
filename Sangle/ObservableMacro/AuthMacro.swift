@@ -16,7 +16,7 @@ struct AuthMacroConfirmSms {
 
 @Observable
 class AuthMacro {
-    var isAuthenticated = false
+    var isAuthenticated = true
     
     func register(name: String, birthDate: String, phoneNumber: String, household: Int) async -> Bool {
         do {

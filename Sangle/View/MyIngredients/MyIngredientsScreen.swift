@@ -64,7 +64,8 @@ struct MyIngredientsScreen: View {
     }
     
     var storageTips: some View {
-        TapButton(action: { path.append(HomeScreenPath.storageTips) }, text: "보관 팁", size: .small, disabled: false)
+        TapButton(action: {
+            path.append(HomeScreenPath.storageTips) }, text: "보관 팁", size: .small, disabled: false, isGold: true)
     }
     
     var scanFAB: some View {
