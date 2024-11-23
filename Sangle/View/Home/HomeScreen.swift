@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum HomeScreenPath {
-    case search, ingredients, storageTips, barcodeScan, scanResult
+    case search, ingredients, storageTips, barcodeScan, scanResult, recipe, recipeDetail
 }
 
 struct HomeScreen: View {
@@ -78,6 +78,12 @@ struct HomeScreen: View {
                         .navigationBarBackButtonHidden()
                 case .scanResult:
                     ScanResultScreen(path: $bottomBarBindable.homePath)
+                        .navigationBarBackButtonHidden()
+                case .recipe:
+                    RecipeSearchScreen(path: $bottomBarBindable.homePath)
+                        .navigationBarBackButtonHidden()
+                case .recipeDetail:
+                    RecipeDetailScreen(path: $bottomBarBindable.homePath)
                         .navigationBarBackButtonHidden()
                 }
             }
