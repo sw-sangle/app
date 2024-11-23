@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Login: View {
+struct Auth: View {
     @State var phoneNumber: String = ""
     @State var code: String = ""
     
@@ -28,7 +28,7 @@ struct Login: View {
                     .frame(height: 54)
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("오랜만이에요 로그인을 진행 해볼까요?")
+                    Text("전화번호 인증을 진행해주세요")
                         .typography(.title3Emphasized, color: .Color.black )
                     
                     Text("아래 정보들을 입력 해주세요")
@@ -66,7 +66,7 @@ struct Login: View {
                 Group {
                     TapButton(action: {
                         authMacro.isAuthenticated = true
-                    }, text: "로그인", size: .large, disabled: codeDisabled || code.count != 6, fill: true)
+                    }, text: "다음", size: .large, disabled: codeDisabled || code.count != 6, fill: true)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 14)
@@ -77,6 +77,6 @@ struct Login: View {
 }
 
 #Preview {
-    Login()
+    Auth()
         .environment(AuthMacro())
 }

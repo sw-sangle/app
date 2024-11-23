@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         if !authMacro.isAuthenticated {
-             Login()
+             Auth()
         } else {
             @Bindable var bottomBarMacro = bottomBarMacro
                                                                                                                                                                                                                                                                                           
