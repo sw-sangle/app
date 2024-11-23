@@ -15,9 +15,26 @@ struct RecipeSearchScreen: View {
     var body: some View {
         VStack(spacing: 0) {
             titleBar
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 16) {
+                    ForEach(1...10, id: \.self) { _ in
+                        RecipeItem(
+                            model: RecipeItemModel(
+                                title: "당근 볶음밥 맛있게 만들기",
+                                category: "채소",
+                                difficulty: 1,
+                                image: "https://picsum.photos/200"
+                            )
+                        )
+                    }
+                }
+                .padding(.bottom, 60)
+            }
         }
+        .onAppear(perform: UIApplication.shared.hideKeyboard)
     }
-    
+     
     var titleBar: some View {
         HStack(spacing: 14) {
             Button(action: {
