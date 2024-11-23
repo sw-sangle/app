@@ -63,7 +63,7 @@ struct HomeScreen: View {
             .navigationDestination(for: HomeScreenPath.self) { home in
                 switch home {
                 case .search:
-                    Text("Search")
+                    RecipeSearchScreen(path: $path)
                         .navigationBarBackButtonHidden() 
                 }
             }

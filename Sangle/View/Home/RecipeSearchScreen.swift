@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RecipeSearchScreen: View {
+    @Binding var path: NavigationPath
+    
     @State var keyword: String = ""
     
     var body: some View {
@@ -18,7 +20,9 @@ struct RecipeSearchScreen: View {
     
     var titleBar: some View {
         HStack(spacing: 14) {
-            Button(action: {}) {
+            Button(action: {
+                path.removeLast()
+            }) {
                 Icon("Icon/arrow_backward", size: 24, color: .Color.black)
             }
             
@@ -34,5 +38,5 @@ struct RecipeSearchScreen: View {
 }
 
 #Preview {
-    RecipeSearchScreen()
+   RecipeSearchScreen(path: .constant(NavigationPath([HomeScreenPath.search])))
 }
