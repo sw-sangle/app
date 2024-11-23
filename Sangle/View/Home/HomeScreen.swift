@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum HomeScreenPath {
-    case search
+    case search, ingredients
 }
 
 struct HomeScreen: View {
@@ -64,7 +64,10 @@ struct HomeScreen: View {
                 switch home {
                 case .search:
                     RecipeSearchScreen(path: $path)
-                        .navigationBarBackButtonHidden() 
+                        .navigationBarBackButtonHidden()
+                case .ingredients:
+                    MyIngredients(path: $path)
+                        .navigationBarBackButtonHidden()
                 }
             }
         }
@@ -110,17 +113,19 @@ struct HomeScreen: View {
     }
     
     var myIngredients: some View {
-        IngredientItemDetail(
-            icon: "refrigerator",
-            title: "내 식재료",
-            description: "최신순으로 정렬되어있어요",
-            content: [
-                IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)),
-                IngredientModel(name: "당근", category: "채소", date: Date.from(year: 2024, month: 11, day: 22)),
-                IngredientModel(name: "시금치", category: "채소", date: Date.from(year: 2024, month: 11, day: 23)),
-            ],
-            action: {}
-        )
+        NavigationLink(value: HomeScreenPath.ingredients) {
+            IngredientItemDetail(
+                icon: "refrigerator",
+                title: "내 식재료",
+                description: "최신순으로 정렬되어있어요",
+                content: [
+                    IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)),
+                    IngredientModel(name: "당근", category: "채소", date: Date.from(year: 2024, month: 11, day: 22)),
+                    IngredientModel(name: "시금치", category: "채소", date: Date.from(year: 2024, month: 11, day: 23)),
+                ],
+                action: {}
+            )
+        }
     }
     
     var menuRecommendation: some View {
