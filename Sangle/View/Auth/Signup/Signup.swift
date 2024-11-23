@@ -9,12 +9,15 @@ import SwiftUI
 
 struct Signup: View {
     @Binding var showSignup: Bool
+    let phoneNumber: String
     
-    @State var selection: Int = 1
+    @State var selection: Int = 0
     
     @State var name: String = ""
     @State var birth: String = ""
     @State var household: Int = 0
+    
+    @State var errorMessage = ""
     
     @Environment(AuthMacro.self) private var authMacro
     
@@ -60,12 +63,23 @@ struct Signup: View {
             
             Spacer()
             
-            Group {
+            VStack(spacing: 14) {
+                Text(errorMessage)
+                    .typography(.body1, color: .Color.red)
+                
                 TapButton(action: {
                     if selection < 1 {
                         selection += 1
                     } else {
-                        authMacro.isAuthenticated = true
+                        Task {
+                            let response = await authMacro.register(name: name, birthDate: birth, phoneNumber: phoneNumber, household: household)
+                            
+                            if !response {
+                                errorMessage = "회원가입에 실패했습니다"
+                            } else {
+                                errorMessage = ""
+                            }
+                        }
                     }
                 }, text: selection == 1 ? "계정 만들기" : "다음", size: .large, disabled: isDisabled, fill: true)
             }
@@ -76,6 +90,6 @@ struct Signup: View {
 }
 
 #Preview {
-    Signup(showSignup: .constant(true))
+    Signup(showSignup: .constant(true), phoneNumber: "")
         .environment(AuthMacro())
 }

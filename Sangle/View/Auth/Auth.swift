@@ -19,6 +19,8 @@ struct Auth: View {
     
     @State var showSignup: Bool = false
     
+    @State var errorMessage: String = ""
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -70,10 +72,24 @@ struct Auth: View {
                     
                     Spacer()
                     
-                    Group {
+                    VStack(spacing: 14) {
+                        Text(errorMessage)
+                            .typography(.body1, color: .Color.red)
+                        
                         TapButton(action: {
-                            //                        authMacro.isAuthenticated = true
-                            showSignup = true
+                            Task {
+                                let response = await authMacro.confirmSms(phoneNumber, code: code)
+                                
+                                if response.isCorrect {
+                                    if !response.isExist {
+                                        showSignup = true
+                                    }
+                                } else {
+                                    withAnimation(.smooth(duration: 0.2)) {
+                                        errorMessage = response.errorMessage
+                                    }
+                                }
+                            }
                         }, text: "다음", size: .large, disabled: codeDisabled || code.count != 6, fill: true)
                     }
                     .padding(.horizontal, 20)
@@ -82,7 +98,7 @@ struct Auth: View {
             }
             .onAppear (perform: UIApplication.shared.hideKeyboard)
             .navigationDestination(isPresented: $showSignup) {
-                Signup(showSignup: $showSignup)
+                Signup(showSignup: $showSignup, phoneNumber: phoneNumber)
                     .navigationBarBackButtonHidden()
             }
         }

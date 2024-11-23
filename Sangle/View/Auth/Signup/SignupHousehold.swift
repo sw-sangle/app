@@ -42,7 +42,7 @@ extension Signup {
                     Text("가구의 수를 선택해주세요")
                         .typography(.title3Emphasized, color: .Color.black)
                     
-                    Text("아래 정보들을 입력 해주세요 \(count)")
+                    Text("아래 정보들을 입력 해주세요")
                         .typography(.body1, color: .Gray._500)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
