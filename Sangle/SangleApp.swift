@@ -9,12 +9,25 @@ import SwiftUI
 
 @main
 struct SangleApp: App {
+    @State var showSplashScreen: Bool = true
+    
     @State private var bottomBarMacro = BottomBarMacro()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(bottomBarMacro)
+            if showSplashScreen {
+                SplashScreen()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            withAnimation {
+                                showSplashScreen = false
+                            }
+                        }
+                    }
+            } else {
+                ContentView()
+                    .environment(bottomBarMacro)
+            }
         }
     }
 }
