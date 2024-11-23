@@ -21,6 +21,12 @@ struct BarcodeScanScreen: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .onChange(of: scannedCode) { _, newValue in
+            if newValue.count == 13 {
+                path.append(HomeScreenPath.scanResult)
+            }
+        }
+        .onAppear { scannedCode = "" }
     }
     
     var close: some View {
@@ -28,12 +34,11 @@ struct BarcodeScanScreen: View {
             Button(action: { path.removeLast() }) {
                 Icon("Icon/close", size: 24)
             }
-            .frame(width: 50, height: 50)
+            .frame(width: 50, height: 50, alignment: .center)
             .background(.white)
-            .cornerRadius(25)
+            .cornerRadius(1000)
             .shadow(color: .black.opacity(0.25), radius: 16, x: 0, y: 4)
         }
-        .padding(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
 }
