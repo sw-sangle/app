@@ -13,9 +13,14 @@ struct StorageTipsScreen: View {
     var body: some View {
         VStack {
             Header(title: "보관 팁", action: { path.removeLast() }, type: .back)
-            ScrollView(.vertical) {
-                
+            
+            VStack(spacing: 16) {
+                VStack(spacing: 0) {
+                    Image("3D/")
+                }
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 14)
         }
     }
 }

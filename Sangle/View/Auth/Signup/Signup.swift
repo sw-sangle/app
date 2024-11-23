@@ -71,6 +71,8 @@ struct Signup: View {
                     if selection < 1 {
                         selection += 1
                     } else {
+                        UIApplication.shared.hideKeyboard()
+                        
                         Task {
                             let response = await authMacro.register(name: name, birthDate: birth, phoneNumber: phoneNumber, household: household)
                             
