@@ -29,6 +29,8 @@ struct AnalysisScreen: View {
                                 ignoreRecentProductsAlert
                             }
                             
+                            foodPurchaseSuggestions
+                            
                             AnalysisMonthlyGraph(
                                 title: "버려지지 않은 식재료",
                                 chartData: [
@@ -107,6 +109,36 @@ struct AnalysisScreen: View {
         }
         .padding(16)
         .frame(maxWidth: .infinity)
+        .background(Color.Gray._150)
+        .cornerRadius(12)
+    }
+    
+    var foodPurchaseSuggestions: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("식품 구입 제안")
+                .typography(.body1Emphasized)
+            VStack(alignment: .leading, spacing: 8) {
+                VStack(spacing: 0) {
+                    Text("당근")
+                        .typography(.body1)
+                    Text("채소")
+                        .typography(.body2, color: Color.Gray._500)
+                }
+                RoundedDivider()
+                VStack(spacing: 0) {
+                    Text("당근")
+                        .typography(.body1)
+                    Text("채소")
+                        .typography(.body2, color: Color.Gray._500)
+                }
+            }
+            .padding(14)
+            .frame(width: 321, alignment: .topLeading)
+            .background(Color.Gray._200)
+            .cornerRadius(16)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.Gray._150)
         .cornerRadius(12)
     }
