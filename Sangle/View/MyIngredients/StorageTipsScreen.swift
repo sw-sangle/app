@@ -11,25 +11,28 @@ struct StorageTipsCard: View {
     let image: String
     let title: String
     let description: String
+    let path: StorageTipsPath
     
     var body: some View {
-        VStack(spacing: 0) {
-            Image(image)
-                .resizable()
-                .frame(width: 100, height: 100)
-            
-            Text(title) 
-                .typography(.subtitle1Emphasized, color: .Color.black)
-            
-            Text(description)
-                .typography(.body2, color: .Gray._500)
+        NavigationLink(value: path) {
+            VStack(spacing: 0) {
+                Image(image)
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                
+                Text(title)
+                    .typography(.subtitle1Emphasized, color: .Color.black)
+                
+                Text(description)
+                    .typography(.body2, color: .Gray._500)
+            }
+            .padding(.vertical, 24)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.line, lineWidth: 1)
+            )
         }
-        .padding(.vertical, 24)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.line, lineWidth: 1)
-        )
     }
 }
 
@@ -43,22 +46,23 @@ struct StorageTipsScreen: View {
     ]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Header(title: "보관 팁", action: { path.removeLast() }, type: .back)
             
             VStack(spacing: 16) {
                 ForEach(tips, id: \.title) { tip in
-                    NavigationLink(value: tip.path) {
-                        StorageTipsCard(
-                            image: tip.image,
-                            title: tip.title,
-                            description: tip.description
-                        )
-                    }
+                    StorageTipsCard(
+                        image: tip.image,
+                        title: tip.title,
+                        description: tip.description,
+                        path: tip.path
+                    )
                 }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 14)
+            
+            Spacer()
         }
         .navigationBarBackButtonHidden(true)
     }
