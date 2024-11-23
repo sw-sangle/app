@@ -34,7 +34,7 @@ struct StorageTipsItem: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(Color.Gray._150)
         .radius(12)

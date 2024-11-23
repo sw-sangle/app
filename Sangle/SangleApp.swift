@@ -29,6 +29,15 @@ struct SangleApp: App {
                 ContentView()
                     .environment(bottomBarMacro)
                     .environment(authMacro)
+                    .onOpenURL { url in
+                        guard url.scheme! == "sangle-deeplink" &&
+                              url.host() == "sangle.apne2a.algorix.cloud",
+                              let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+                              let idItem = components.queryItems?.first(where: { $0.name == "id" }),
+                              let id = idItem.value else {
+                            return
+                        }
+                    }
             }
         }
     }

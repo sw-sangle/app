@@ -55,3 +55,9 @@ extension String {
            return result
        }
 }
+
+extension Int {
+    func addZeroPadding() -> String {
+        return String(format: "%02d", self)
+    }
+}

@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import Alamofire
 
 struct AuthMacroConfirmSms {
     let isCorrect: Bool
@@ -16,7 +17,14 @@ struct AuthMacroConfirmSms {
 
 @Observable
 class AuthMacro {
-    var isAuthenticated = true
+    var isAuthenticated = false
+    var me: MeModel?
+    
+    init() {
+        Task {
+            fetchMe()
+        }
+    }
     
     func register(name: String, birthDate: String, phoneNumber: String, household: Int) async -> Bool {
         do {
@@ -24,6 +32,9 @@ class AuthMacro {
             
             if KeychainHelper.update(token: response.accessToken, forAccount: "accessToken") {
                 isAuthenticated = true
+                
+                let response = try await AuthService.me()
+                self.me = response
                 
                 return true
             }
@@ -45,6 +56,8 @@ class AuthMacro {
                 
                 if response.isExist {
                     if KeychainHelper.update(token: response.accessToken, forAccount: "accessToken") {
+                        let meResponse = try await AuthService.me()
+                        self.me = meResponse
                         isAuthenticated = true
                         
                         return AuthMacroConfirmSms(isCorrect: true, errorMessage: errorMessage, isExist: true)
@@ -62,5 +75,29 @@ class AuthMacro {
             
             return AuthMacroConfirmSms(isCorrect: false, errorMessage: "알수 없는 오류가 발생했습니다", isExist: false)
         }
+    }
+    
+    func fetchMe() {
+       guard let token = KeychainHelper.read(forAccount: "accessToken") else {
+           isAuthenticated = false
+           return
+       }
+
+       let headers: HTTPHeaders = [
+           "Authorization": "Bearer \(token)"
+       ]
+
+       AF.request("\(Network.baseUrl)/api/user/me", method: .get, headers: headers)
+       .validate()
+       .responseDecodable(of: MeModel.self) { response in
+           switch response.result {
+           case .success(let data):
+               self.isAuthenticated = true
+               self.me = data
+           case .failure(_):
+               self.isAuthenticated = false
+               self.me = nil
+           }
+       }
     }
 }

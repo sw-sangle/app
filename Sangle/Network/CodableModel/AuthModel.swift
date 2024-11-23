@@ -21,3 +21,13 @@ struct RegisterModel: Decodable {
     let phoneNumber: String
     let accessToken: String
 }
+
+struct MeModel: Decodable {
+    let id: String
+    let name: String
+    let phoneNumber: String
+    let familySize: Int
+    let birthDateYear: Int
+    let birthDateMonth: Int
+    let birthDateDay: Int
+}

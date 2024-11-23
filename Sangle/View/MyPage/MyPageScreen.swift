@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MyPageScreen: View {
     @Environment(BottomBarMacro.self) private var bottomBarMacro
+    @Environment(AuthMacro.self) private var authMacro
     
     var body: some View {
         @Bindable var bottomBarBindable = bottomBarMacro
@@ -22,11 +23,13 @@ struct MyPageScreen: View {
                     Header(title: "마이페이지", type: .title)
                     
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("권지원님 환영합니다!")
-                            .typography(.subtitle2Emphasized, color: .Color.black)
-                        
-                        Text("2008.08.17")
-                            .typography(.subtitle2, color: .Gray._500)
+                        if let me = authMacro.me {
+                            Text("\(me.name)님 환영합니다!")
+                                .typography(.subtitle2Emphasized, color: .Color.black)
+                            
+                            Text("\(String(me.birthDateYear)).\(me.birthDateMonth.addZeroPadding()).\(me.birthDateDay.addZeroPadding())")
+                                .typography(.subtitle2, color: .Gray._500)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(20)
@@ -76,4 +79,5 @@ struct MyPageScreen: View {
 #Preview {
     MyPageScreen()
         .environment(BottomBarMacro())
+        .environment(AuthMacro())
 }
