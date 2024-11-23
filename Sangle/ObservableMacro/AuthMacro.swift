@@ -47,6 +47,12 @@ class AuthMacro {
         }
     }
     
+    func logout() {
+        if KeychainHelper.delete(forAccount: "accessToken") {
+            isAuthenticated = false
+        }
+    }
+    
     func confirmSms(_ phoneNumber: String, code: String) async -> AuthMacroConfirmSms {
         do {
             let response = try await AuthService.confirmSms(phoneNumber, code: code)
