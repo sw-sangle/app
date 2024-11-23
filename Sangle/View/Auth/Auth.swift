@@ -58,6 +58,10 @@ struct Auth: View {
                                 codeDisabled = false
                                 submittedPhoneNumber = phoneNumber
                                 code = ""
+                                
+                                Task {
+                                    try await AuthService.verifySms(phoneNumber)
+                                }
                             }, text: "인증", size: .large, disabled: !phoneNumber.isValidPhoneNumber() || submittedPhoneNumber == phoneNumber)
                         }
                     }
@@ -79,6 +83,7 @@ struct Auth: View {
             .onAppear (perform: UIApplication.shared.hideKeyboard)
             .navigationDestination(isPresented: $showSignup) {
                 Signup(showSignup: $showSignup)
+                    .navigationBarBackButtonHidden()
             }
         }
     }
