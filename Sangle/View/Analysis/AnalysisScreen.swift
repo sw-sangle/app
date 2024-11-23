@@ -117,23 +117,14 @@ struct AnalysisScreen: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("식품 구입 제안")
                 .typography(.body1Emphasized)
-            VStack(alignment: .leading, spacing: 8) {
-                VStack(spacing: 0) {
-                    Text("당근")
-                        .typography(.body1)
-                    Text("채소")
-                        .typography(.body2, color: Color.Gray._500)
-                }
+            VStack(spacing: 8) {
+                FoodPurchaseSuggestionsItem(name: "당근", category: "채소", count: -10)
                 RoundedDivider()
-                VStack(spacing: 0) {
-                    Text("당근")
-                        .typography(.body1)
-                    Text("채소")
-                        .typography(.body2, color: Color.Gray._500)
-                }
+                FoodPurchaseSuggestionsItem(name: "당근", category: "채소", count: 5)
+                
             }
             .padding(14)
-            .frame(width: 321, alignment: .topLeading)
+            .frame(width: .infinity, alignment: .topLeading)
             .background(Color.Gray._200)
             .cornerRadius(16)
         }
@@ -141,6 +132,27 @@ struct AnalysisScreen: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.Gray._150)
         .cornerRadius(12)
+    }
+}
+
+struct FoodPurchaseSuggestionsItem: View {
+    let name: String
+    let category: String
+    let count: Int
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            VStack(spacing: 0) {
+                Text(name)
+                    .typography(.body1)
+                Text(category)
+                    .typography(.body2, color: Color.Gray._500)
+            }
+            Spacer()
+            Text("\(count < 0 ? count * -1 : count)개")
+                .typography(.body2, color: count < 0 ? Color.red : Color.Color.green)
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 
