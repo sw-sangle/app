@@ -12,13 +12,14 @@ enum FilterMode {
 }
 
 struct MyIngredients: View {
+    @Binding var path: NavigationPath
     @State var filterMode: FilterMode = .recent
     
     private let ingredientsCount: Int = 4
     
     var body: some View {
         VStack {
-            Header(title: "내 식재료", type: .back)
+            Header(title: "내 식재료", action: { path.removeLast() }, type: .back)
             ZStack {
                 ScrollView(.vertical) {
                     HStack(spacing: 12) {
@@ -75,5 +76,5 @@ struct MyIngredients: View {
 }
 
 #Preview {
-    MyIngredients()
+    MyIngredients(path: .constant(NavigationPath([HomeScreenPath.ingredients])))
 }
