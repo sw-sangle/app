@@ -32,13 +32,24 @@ struct ContentView: View {
                     .toolbar(.hidden, for: .tabBar)
                 }
                 
-                VStack {
-                    Spacer()
-                    BottomBar(tab: $bottomBarMacro.tab)
+                if (shouldShowBottomBar) {
+                    VStack {
+                        Spacer()
+                        BottomBar(tab: $bottomBarMacro.tab)
+                    }
                 }
             }
         }
     }
+    
+    private var shouldShowBottomBar: Bool {
+       let paths = [
+            bottomBarMacro.homePath,
+            bottomBarMacro.analysisPath,
+            bottomBarMacro.mypagePath
+       ]
+       return paths.allSatisfy { $0.count == 0 }
+   }
 }
 
 #Preview {

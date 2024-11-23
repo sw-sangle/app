@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct StorageTipsScreen: View {
-    @Binding var homeScreenPath: NavigationPath
+    @Binding var path: NavigationPath
     
     var body: some View {
         VStack {
-            Header(title: "보관 팁", action: { homeScreenPath.removeLast() }, type: .back)
+            Header(title: "보관 팁", action: { path.removeLast() }, type: .back)
             ScrollView(.vertical) {
                 
             }
@@ -21,5 +21,5 @@ struct StorageTipsScreen: View {
 }
 
 #Preview {
-    StorageTipsScreen(homeScreenPath: .constant(NavigationPath([MyIngredientsScreenScreenPath.tips])))
+    StorageTipsScreen(path: .constant(NavigationPath([HomeScreenPath.storageTips])))
 }

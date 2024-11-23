@@ -7,37 +7,29 @@
 
 import SwiftUI
 
-enum MyIngredientsScreenScreenPath {
-    case scan, tips
-}
-
 enum FilterMode {
     case recent, older
 }
 
 struct MyIngredientsScreen: View {
-    @Binding var homeScreenPath: NavigationPath
+    @Binding var path: NavigationPath
     
-    @State private var path = NavigationPath()
     @State var filterMode: FilterMode = .recent
     
     private let ingredientsCount: Int = 4
     
     var body: some View {
-        NavigationStack(path: $path) {
+        VStack {
+            Header(title: "내 식재료", action: { path.removeLast() }, type: .back)
             ZStack {
-                Color.background
-                    .ignoresSafeArea()
-                
                 VStack {
-                    Header(title: "내 식재료", action: { homeScreenPath.removeLast() }, type: .back)
-                    ZStack {
-                        ScrollView(.vertical) {
+                    ScrollView(.vertical) {
+                        VStack(spacing: 0) {
                             HStack(spacing: 12) {
                                 filter
                                 storageTips
                             }
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             
                             VStack(spacing: 14) {
@@ -48,25 +40,20 @@ struct MyIngredientsScreen: View {
                                     }
                                 }
                             }
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal)
                         }
-                        .frame(width: .infinity, height: .infinity)
-                        
-                        scanFAB
                     }
+                    
+                    Spacer()
+                    
+                    scanFAB
+                        .padding(.bottom, 14)
                 }
+                .padding(.bottom, 60)
             }
-            .navigationDestination(for: MyIngredientsScreenScreenPath.self) { screenPath in
-                switch screenPath {
-                    case .scan:
-                        BarcodeScanScreen(homeScreenPath: $path)
-                            .navigationBarBackButtonHidden()
-                    case .tips:
-                        StorageTipsScreen(homeScreenPath: $path)
-                            .navigationBarBackButtonHidden()
-                }
-            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+
     }
     
     var filter: some View {
@@ -79,25 +66,24 @@ struct MyIngredientsScreen: View {
                     .typography(.body2)
             }
             .padding(.vertical, 14)
-            .padding(.leading, 20)
         }
     }
     
     var storageTips: some View {
-        TapButton(action: { path.append(MyIngredientsScreenScreenPath.tips) }, text: "보관 팁", size: .small, disabled: false)
+        TapButton(action: { path.append(HomeScreenPath.storageTips) }, text: "보관 팁", size: .small, disabled: false)
     }
     
     var scanFAB: some View {
         VStack() {
-            NavigationLink(value: MyIngredientsScreenScreenPath.scan) {
+            NavigationLink(value: HomeScreenPath.barcodeScan) {
                 Badge.Icon(name: "document_scanner")
             }
         }
-        .padding(.trailing)
+        .padding(.horizontal)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
     }
 }
 
 #Preview {
-    MyIngredientsScreen(homeScreenPath: .constant(NavigationPath([HomeScreenPath.ingredients])))
+    MyIngredientsScreen(path: .constant(NavigationPath([HomeScreenPath.ingredients])))
 }

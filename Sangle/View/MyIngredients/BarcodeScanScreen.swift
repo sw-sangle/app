@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BarcodeScanScreen: View {
-    @Binding var homeScreenPath: NavigationPath
+    @Binding var path: NavigationPath
     
     @State var scannedCode: String = ""
     
@@ -25,7 +25,7 @@ struct BarcodeScanScreen: View {
     
     var close: some View {
         VStack {
-            Button(action: { homeScreenPath.removeLast() }) {
+            Button(action: { path.removeLast() }) {
                 Icon("Icon/close", size: 24)
             }
             .frame(width: 50, height: 50)
@@ -39,5 +39,5 @@ struct BarcodeScanScreen: View {
 }
 
 #Preview {
-    BarcodeScanScreen(homeScreenPath: .constant(NavigationPath([MyIngredientsScreenScreenPath.scan])))
+    BarcodeScanScreen(path: .constant(NavigationPath([HomeScreenPath.barcodeScan])))
 }

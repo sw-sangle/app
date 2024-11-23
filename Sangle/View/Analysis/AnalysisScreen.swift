@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct AnalysisScreen: View {
-    @State var path = NavigationPath()
+    @Environment(BottomBarMacro.self) private var bottomBarMacro
     
     @State var showIgnoreRecentProductsAlert: Bool = true
     
     var body: some View {
-        NavigationStack(path: $path) {
+        @Bindable var bottomBarBindable = bottomBarMacro
+        
+        NavigationStack(path: $bottomBarBindable.analysisPath) {
             ZStack {
                 Color.background
                     .ignoresSafeArea()
@@ -112,4 +114,5 @@ struct AnalysisScreen: View {
 
 #Preview {
     AnalysisScreen()
+        .environment(BottomBarMacro())
 }

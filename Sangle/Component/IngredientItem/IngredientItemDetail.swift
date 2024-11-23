@@ -13,8 +13,6 @@ struct IngredientItemDetail: View {
     let description: String
     let content: [IngredientModel]
     
-    let action: () -> Void
-    
     
     var body: some View {
         VStack(spacing: 16) {
@@ -44,9 +42,7 @@ struct IngredientItemDetail: View {
                 
                 Spacer()
                 
-                Button(action: action) {
-                    Icon("Icon/chevron_forward", size: 24, color: Color(hex: "#1c1b1f"))
-                }
+                Icon("Icon/chevron_forward", size: 24, color: Color(hex: "#1c1b1f"))
             }
         }
     }
@@ -79,8 +75,7 @@ struct IngredientItemDetail: View {
                 IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)),
                 IngredientModel(name: "당근", category: "채소", date: Date.from(year: 2024, month: 11, day: 22)),
                 IngredientModel(name: "시금치", category: "채소", date: Date.from(year: 2024, month: 11, day: 23)),
-            ],
-            action: {}
+            ]
         )
     }
 }

@@ -8,16 +8,16 @@
 import SwiftUI
 
 enum HomeScreenPath {
-    case search, ingredients
+    case search, ingredients, storageTips, barcodeScan
 }
 
 struct HomeScreen: View {
-    @State private var path = NavigationPath()
-    
     @State private var showIngredientsAdditionAlert: Bool = true
     @State private var showExpirationDateAlert: Bool = true
     @State private var showMyIngredients: Bool = true
     @State private var showMenuRecommendation: Bool = true
+    
+    @Environment(BottomBarMacro.self) private var bottomBarMacro
     
     @State private var expirationDateModel: [IngredientModel] = [
         IngredientModel(name: "고구마", category: "채소"),
@@ -26,7 +26,9 @@ struct HomeScreen: View {
     ]
     
     var body: some View {
-        NavigationStack(path: $path) {
+        @Bindable var bottomBarBindable = bottomBarMacro
+        
+        NavigationStack(path: $bottomBarBindable.homePath) {
             ZStack {
                 Color.background
                     .ignoresSafeArea()
@@ -63,10 +65,16 @@ struct HomeScreen: View {
             .navigationDestination(for: HomeScreenPath.self) { home in
                 switch home {
                 case .search:
-                    RecipeSearchScreen(path: $path)
+                    RecipeSearchScreen(path: $bottomBarBindable.homePath)
                         .navigationBarBackButtonHidden()
                 case .ingredients:
-                    MyIngredientsScreen(homeScreenPath: $path)
+                    MyIngredientsScreen(path: $bottomBarBindable.homePath)
+                        .navigationBarBackButtonHidden()
+                case .barcodeScan:
+                    BarcodeScanScreen(path: $bottomBarBindable.homePath)
+                        .navigationBarBackButtonHidden()
+                case .storageTips:
+                    StorageTipsScreen(path: $bottomBarBindable.homePath)
                         .navigationBarBackButtonHidden()
                 }
             }
@@ -122,8 +130,8 @@ struct HomeScreen: View {
                     IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)),
                     IngredientModel(name: "당근", category: "채소", date: Date.from(year: 2024, month: 11, day: 22)),
                     IngredientModel(name: "시금치", category: "채소", date: Date.from(year: 2024, month: 11, day: 23)),
-                ],
-                action: {}
+                ]
+
             )
         }
     }
@@ -169,4 +177,5 @@ struct HomeScreen: View {
 
 #Preview {
     HomeScreen()
+        .environment(BottomBarMacro())
 }

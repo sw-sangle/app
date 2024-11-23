@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MyPageScreen: View {
-    @State var path = NavigationPath()
+    @Environment(BottomBarMacro.self) private var bottomBarMacro
     
     var body: some View {
-        NavigationStack(path: $path) {
+        @Bindable var bottomBarBindable = bottomBarMacro
+        
+        NavigationStack(path: $bottomBarBindable.mypagePath) {
             ZStack {
                 Color.background
                     .ignoresSafeArea()
@@ -25,4 +27,5 @@ struct MyPageScreen: View {
 
 #Preview {
     MyPageScreen()
+        .environment(BottomBarMacro())
 }

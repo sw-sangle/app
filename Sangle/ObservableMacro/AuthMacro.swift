@@ -11,5 +11,5 @@ import Observation
 
 @Observable
 class AuthMacro {
-    var isAuthenticated = false
+    var isAuthenticated = true
 }

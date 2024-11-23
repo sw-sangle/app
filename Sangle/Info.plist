@@ -7,5 +7,7 @@
 		<string>WantedSans-Medium.otf</string>
 		<string>WantedSans-SemiBold.otf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to capture the barcode</string>
 </dict>
 </plist>
