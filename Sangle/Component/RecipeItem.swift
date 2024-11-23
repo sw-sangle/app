@@ -19,6 +19,7 @@ let difficultyLevels: [String] = ["입문", "초급", "중급", "어려움", "�
 
 struct RecipeItem: View {
     let model: RecipeItemModel
+    let action: () -> Void
     
     var difficulty: String {
         return difficultyLevels[model.difficulty - 1]
@@ -62,9 +63,7 @@ struct RecipeItem: View {
             .background(Color.Gray._200)
             .radius(12)
             
-            TapButton(action: {
-                
-            }, text: "만들어 보기", size: .large, disabled: false, fill: true)
+            TapButton(action: action, text: "만들어 보기", size: .large, disabled: false, fill: true)
         }
         .padding(16)
         .background(Color.Gray._150)
@@ -79,6 +78,7 @@ struct RecipeItem: View {
             category: "채소",
             difficulty: 1,
             image: "https://www.sempio.com/image/GK/MQ/20190717175948528e8b1d108-3c05-4694-8a35-0df455df579f.jpg"
-        )
+        ),
+        action: {}
     )
 }
