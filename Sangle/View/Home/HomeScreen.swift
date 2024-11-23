@@ -11,6 +11,10 @@ enum HomeScreenPath {
     case search, ingredients, storageTips, barcodeScan, scanResult, recipe, recipeDetail
 }
 
+enum StorageTipsPath {
+    case fruits, vegetables, meats
+}
+
 struct HomeScreen: View {
     @State private var showIngredientsAdditionAlert: Bool = true
     @State private var showExpirationDateAlert: Bool = true
@@ -86,6 +90,9 @@ struct HomeScreen: View {
                     RecipeDetailScreen(path: $bottomBarBindable.homePath)
                         .navigationBarBackButtonHidden()
                 }
+            }
+            .navigationDestination(for: StorageTipsPath.self) { storageTips in
+                StorageTipsSearchScreen(path: $bottomBarBindable.homePath, type: storageTips)
             }
         }
     }

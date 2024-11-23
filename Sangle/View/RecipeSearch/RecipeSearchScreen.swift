@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct RecipeSearchScreen: View {
     @Binding var path: NavigationPath
     
