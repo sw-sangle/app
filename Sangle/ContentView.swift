@@ -9,28 +9,33 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(BottomBarMacro.self) private var bottomBarMacro
+    @Environment(AuthMacro.self) private var authMacro
     
     var body: some View {
-        @Bindable var bottomBarMacro = bottomBarMacro
-        
-        ZStack {
-            TabView(selection: $bottomBarMacro.tab) {
-                Group {
-                    HomeScreen()
-                        .tag(BottomBar.Tab.home)
-                    
-                    AnalysisScreen()
-                        .tag(BottomBar.Tab.analysis)
-                    
-                    MyPageScreen()
-                        .tag(BottomBar.Tab.mypage)
+        if !authMacro.isAuthenticated {
+             Login()
+        } else {
+            @Bindable var bottomBarMacro = bottomBarMacro
+                                                                                                                                                                                                                                                                                          
+            ZStack {
+                TabView(selection: $bottomBarMacro.tab) {
+                    Group {
+                        HomeScreen()
+                            .tag(BottomBar.Tab.home)
+                        
+                        AnalysisScreen()
+                            .tag(BottomBar.Tab.analysis)
+                        
+                        MyPageScreen()
+                            .tag(BottomBar.Tab.mypage)
+                    }
+                    .toolbar(.hidden, for: .tabBar)
                 }
-                .toolbar(.hidden, for: .tabBar)
-            }
-            
-            VStack {
-                Spacer()
-                BottomBar(macro: bottomBarMacro)
+                
+                VStack {
+                    Spacer()
+                    BottomBar(macro: bottomBarMacro)
+                }
             }
         }
     }
@@ -39,4 +44,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environment(BottomBarMacro())
+        .environment(AuthMacro())
 }

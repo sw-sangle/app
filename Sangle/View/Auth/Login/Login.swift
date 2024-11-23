@@ -15,6 +15,8 @@ struct Login: View {
     
     @State var codeDisabled: Bool = true
     
+    @Environment(AuthMacro.self) private var authMacro
+    
     var body: some View {
         ZStack {
             Color.background
@@ -52,6 +54,7 @@ struct Login: View {
                         TapButton(action: {
                             codeDisabled = false
                             submittedPhoneNumber = phoneNumber
+                            code = ""
                         }, text: "인증", size: .large, disabled: !phoneNumber.isValidPhoneNumber() || submittedPhoneNumber == phoneNumber)
                     }
                 }
@@ -62,16 +65,18 @@ struct Login: View {
                 
                 Group {
                     TapButton(action: {
-                        
+                        authMacro.isAuthenticated = true
                     }, text: "로그인", size: .large, disabled: codeDisabled || code.count != 6, fill: true)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 14)
             }
         }
+        .onAppear (perform: UIApplication.shared.hideKeyboard)
     }
 }
 
 #Preview {
     Login()
+        .environment(AuthMacro())
 }

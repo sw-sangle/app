@@ -12,6 +12,7 @@ struct SangleApp: App {
     @State var showSplashScreen: Bool = true
     
     @State private var bottomBarMacro = BottomBarMacro()
+    @State private var authMacro = AuthMacro()
     
     var body: some Scene {
         WindowGroup {
@@ -27,6 +28,7 @@ struct SangleApp: App {
             } else {
                 ContentView()
                     .environment(bottomBarMacro)
+                    .environment(authMacro)
             }
         }
     }
