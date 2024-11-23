@@ -66,6 +66,7 @@ extension Input {
                             filter(text) ? .Color.green : .Color.red, lineWidth: 1)
             )
             .animation(.smooth, value: isFocused)
+
         }
     }
 }

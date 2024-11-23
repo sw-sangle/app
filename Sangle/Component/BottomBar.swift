@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BottomBar : View {
-    @Bindable var macro: BottomBarMacro
+    @Binding var tab: Tab
     
     enum Tab {
         case home, analysis, mypage
@@ -17,11 +17,11 @@ struct BottomBar : View {
     var body: some View {
         HStack(spacing: 0) {
             
-            BottomBarItem(icon: "food_bank", text: "홈", current: .home, macro: macro)
+            BottomBarItem(icon: "food_bank", text: "홈", current: .home, tab: $tab)
             
-            BottomBarItem(icon: "bar_chart", text: "소비 분석", current: .analysis, macro: macro)
+            BottomBarItem(icon: "bar_chart", text: "소비 분석", current: .analysis, tab: $tab)
             
-            BottomBarItem(icon: "person", text: "마이페이지", current: .mypage, macro: macro)
+            BottomBarItem(icon: "person", text: "마이페이지", current: .mypage, tab: $tab)
         }
         .padding(.vertical, 4)
         .background(Color.background)
@@ -33,15 +33,15 @@ struct BottomBarItem: View {
     let text: String
     
     let current: BottomBar.Tab
-    @Bindable var macro: BottomBarMacro
+    @Binding var tab: BottomBar.Tab
     
     var isCurrent: Bool {
-        return macro.tab == current
+        return tab == current
     }
     
     var body: some View {
         Button(action: {
-            macro.tab = current
+            tab = current
         }) {
             VStack {
                 Icon("Icon/\(icon)", size: 24, color: isCurrent ? .Color.black : .Gray._350)
@@ -57,6 +57,6 @@ struct BottomBarItem: View {
 
 #Preview {
     VStack {
-        BottomBar(macro: BottomBarMacro())
+        BottomBar(tab: .constant(.home))
     }
 }

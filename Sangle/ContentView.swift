@@ -16,7 +16,7 @@ struct ContentView: View {
              Auth()
         } else {
             @Bindable var bottomBarMacro = bottomBarMacro
-                                                                                                                                                                                                                                                                                          
+            
             ZStack {
                 TabView(selection: $bottomBarMacro.tab) {
                     Group {
@@ -34,7 +34,7 @@ struct ContentView: View {
                 
                 VStack {
                     Spacer()
-                    BottomBar(macro: bottomBarMacro)
+                    BottomBar(tab: $bottomBarMacro.tab)
                 }
             }
         }
