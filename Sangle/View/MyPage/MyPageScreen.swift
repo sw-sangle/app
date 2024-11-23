@@ -11,6 +11,8 @@ struct MyPageScreen: View {
     @Environment(BottomBarMacro.self) private var bottomBarMacro
     @Environment(AuthMacro.self) private var authMacro
     
+    @State var showAlert: Bool = false
+    
     var body: some View {
         @Bindable var bottomBarBindable = bottomBarMacro
         
@@ -70,7 +72,26 @@ struct MyPageScreen: View {
                     .padding(20)
                     
                     Spacer()
+                    
+                    VStack {
+                        TapButton(action: {
+                            showAlert.toggle()
+                        }, text: "로그아웃", size: .large, disabled: false, fill: true)
+                        .alert(isPresented: $showAlert) {
+                            Alert(
+                                title: Text("로그아웃"),
+                                message: Text("정말 로그아웃 하시겠습니까?"),
+                                primaryButton: .destructive(Text("로그아웃"), action: {
+                                    authMacro.logout()
+                                }),
+                                secondaryButton: .cancel(Text("취소"))
+                            )
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 14)
                 }
+                .padding(.bottom, 60)
             }
         }
     }
