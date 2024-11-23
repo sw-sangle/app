@@ -93,6 +93,7 @@ struct HomeScreen: View {
             }
             .navigationDestination(for: StorageTipsPath.self) { storageTips in
                 StorageTipsSearchScreen(path: $bottomBarBindable.homePath, type: storageTips)
+                    .navigationBarBackButtonHidden()
             }
         }
     }
