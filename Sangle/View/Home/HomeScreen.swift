@@ -66,7 +66,7 @@ struct HomeScreen: View {
                     RecipeSearchScreen(path: $path)
                         .navigationBarBackButtonHidden()
                 case .ingredients:
-                    MyIngredients(path: $path)
+                    MyIngredientsScreen(homeScreenPath: $path)
                         .navigationBarBackButtonHidden()
                 }
             }
