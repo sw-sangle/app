@@ -27,25 +27,59 @@ struct AnalysisScreen: View {
                                 ignoreRecentProductsAlert
                             }
                             
-                            AnalysisMonthlyGraph(chartData: [
-                                ChartData(
-                                    month: 8,
-                                    value: 70,
-                                    prev: true
-                                ),
-                                ChartData(
-                                    month: 9,
-                                    value: 35
-                                ),
-                                ChartData(
-                                    month: 10,
-                                    value: 80
-                                ),
-                                ChartData(
-                                    month: 11,
-                                    value: 50
-                                ),
-                            ])
+                            AnalysisMonthlyGraph(
+                                title: "버려지지 않은 식재료",
+                                chartData: [
+                                    ChartData(
+                                        month: 8,
+                                        value: 70,
+                                        ingredientsCount: 10
+                                    ),
+                                    ChartData(
+                                        month: 9,
+                                        value: 35,
+                                        ingredientsCount: 10
+                                    ),
+                                    ChartData(
+                                        month: 10,
+                                        value: 80,
+                                        ingredientsCount: 10
+                                    ),
+                                    ChartData(
+                                        month: 11,
+                                        value: 50,
+                                        ingredientsCount: 10
+                                    ),
+                                ],
+                                chartColor: Color.Color.green
+                            )
+                            
+                            AnalysisMonthlyGraph(
+                                title: "버려진 식재료",
+                                chartData: [
+                                    ChartData(
+                                        month: 8,
+                                        value: 20,
+                                        ingredientsCount: 10
+                                    ),
+                                    ChartData(
+                                        month: 9,
+                                        value: 20,
+                                        ingredientsCount: 10
+                                    ),
+                                    ChartData(
+                                        month: 10,
+                                        value: 20,
+                                        ingredientsCount: 10
+                                    ),
+                                    ChartData(
+                                        month: 11,
+                                        value: 20,
+                                        ingredientsCount: 10
+                                    ),
+                                ],
+                                chartColor: Color.Gray._300
+                            )
                         }
                         .padding(.bottom, 60)
                     }

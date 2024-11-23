@@ -15,67 +15,81 @@ struct ChartData: Identifiable {
             value = min(max(value, 0), 100)
         }
     }
-    var prev: Bool = false
+    var ingredientsCount: Int
 }
 
 struct AnalysisMonthlyGraph: View {
+    let title: String
     let chartData: Array<ChartData>
+    let chartColor: Color
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
+            Text(title)
+                .typography(.subtitle2Emphasized)
             ForEach(chartData) { data in
-                AnalysisMonthlyGraphItem(data: data)
+                AnalysisMonthlyGraphItem(data: data, color: chartColor)
             }
         }
-        .padding(.horizontal, 24)
-        .padding(.top, 32)
-        .padding(.bottom, 20)
-        .frame(width: 353, alignment: .topLeading)
+        .padding(20)
+        .background(Color.Gray._150)
         .cornerRadius(12)
-        .overlay(
-          RoundedRectangle(cornerRadius: 12)
-            .inset(by: 0.5)
-            .stroke(Color(red: 0.87, green: 0.87, blue: 0.87), lineWidth: 1)
-        )
     }
 }
 
 struct AnalysisMonthlyGraphItem: View {
     let data: ChartData
+    var color: Color
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 12) {
-                Rectangle()
-                    .fill(Color.Color.green)
-                    .cornerRadius(12)
-                    .frame(width: geometry.size.width * (Double(data.value) / 100), height: 36)
+        VStack(alignment: .leading) {
+            HStack(spacing: 12) {
                 Text("\(data.month)월")
-                    .typography(.body1, color: data.prev ? Color.Gray._500 : .black)
+                    .typography(.subtitle2)
+                Text("등록된 식재료: \(data.ingredientsCount)개")
+                    .typography(.body1, color: Color.Gray._500)
             }
+            GeometryReader { geometry in
+                HStack(alignment: .bottom) {
+                    Rectangle()
+                        .fill(color)
+                        .cornerRadius(12)
+                        .frame(width: (geometry.size.width - 55) * (Double(data.value) / 100), height: 36)
+                    Spacer()
+                    Text("\(data.value)%")
+                        .typography(.subtitle2)
+                }
+            }
+            .frame(maxWidth: .infinity, idealHeight: 36)
         }
-        .frame(maxWidth: .infinity, idealHeight: 68)
     }
 }
 
 #Preview {
-    AnalysisMonthlyGraph(chartData: [
-        ChartData(
-            month: 8,
-            value: 70,
-            prev: true
-        ),
-        ChartData(
-            month: 9,
-            value: 35
-        ),
-        ChartData(
-            month: 10,
-            value: 80
-        ),
-        ChartData(
-            month: 11,
-            value: 50
-        ),
-    ])
+    AnalysisMonthlyGraph(
+        title: "버려지지 않은 식재료",
+        chartData: [
+            ChartData(
+                month: 8,
+                value: 70,
+                ingredientsCount: 10
+            ),
+            ChartData(
+                month: 9,
+                value: 35,
+                ingredientsCount: 10
+            ),
+            ChartData(
+                month: 10,
+                value: 100,
+                ingredientsCount: 10
+            ),
+            ChartData(
+                month: 11,
+                value: 50,
+                ingredientsCount: 10
+            ),
+        ],
+        chartColor: Color.Color.green
+    )
 }
