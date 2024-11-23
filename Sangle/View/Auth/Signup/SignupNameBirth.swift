@@ -33,7 +33,8 @@ extension Signup {
                     Input.Plain(
                         text: $birth,
                         placeholder: "생년월일 8자리를 입력해주세요",
-                        filter: { $0.removeCharacter(".").isBirthString() }
+                        filter: { $0.removeCharacter(".").isBirthString() },
+                        keyboardType: .numberPad
                     )
                     .onChange(of: birth) { oldValue, newValue in
                         birth = newValue.addDotToBirth()
