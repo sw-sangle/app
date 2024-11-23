@@ -6,5 +6,5 @@
 //
 
 enum Network {
-    static let baseUrl = "not defined"
+    static let baseUrl = "https://api.sunghun.shop"
 }

@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum HomeScreenPath {
+    case search
+}
+
 struct HomeScreen: View {
     @State private var path = NavigationPath()
     
@@ -55,6 +59,13 @@ struct HomeScreen: View {
                 }
                 
                 Spacer()
+            }
+            .navigationDestination(for: HomeScreenPath.self) { home in
+                switch home {
+                case .search:
+                    Text("Search")
+                        .navigationBarBackButtonHidden() 
+                }
             }
         }
     }
@@ -114,27 +125,34 @@ struct HomeScreen: View {
     
     var menuRecommendation: some View {
         VStack(spacing: 24) {
-            HStack(spacing: 6) {
-                Image("3D/frying_pan")
-                    .resizable()
-                    .frame(width: 48, height: 48)
-                
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("당근볶음밥")
-                        .typography(.subtitle1Emphasized, color: .Color.black)
+            NavigationLink(value: HomeScreenPath.search) {
+                VStack(spacing: 24) {
+                    HStack(spacing: 6) {
+                        Image("3D/frying_pan")
+                            .resizable()
+                            .frame(width: 48, height: 48)
+                        
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("당근볶음밥")
+                                .typography(.subtitle1Emphasized, color: .Color.black)
+                            
+                            Text("오늘의 요리는 이 메뉴 어때요?")
+                                .typography(.body2, color: .Gray._500)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Icon("Icon/arrow_forward", size: 24, color: Color(hex: "#1C1B1F"))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Text("오늘의 요리는 이 메뉴 어때요?")
-                        .typography(.body2, color: .Gray._500)
+                    Image("Test/carrot_fried_rice")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 200)
+                        .clipped()
+                        .radius(12)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Image("Test/carrot_fried_rice")
-               .resizable()
-               .aspectRatio(contentMode: .fill)
-               .frame(height: 200)
-               .clipped()
-               .radius(12)
             
             TapButton(action: {}, text: "바로가기", size: .large, disabled: false, fill: true)
         }
