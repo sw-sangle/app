@@ -120,6 +120,7 @@ struct BarcodeScannerPreview: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
+        .ignoresSafeArea()
     }
 }
 

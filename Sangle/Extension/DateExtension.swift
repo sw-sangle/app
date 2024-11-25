@@ -43,4 +43,17 @@ extension Date {
        dateFormatter.dateFormat = "M월 d일 (E)"
        return dateFormatter.string(from: self)
     }
+    
+    var onlyDate: Date {
+            let component = Calendar.current.dateComponents([.year, .month, .day], from: self)
+            return Calendar.current.date(from: component) ?? Date()
+        }
+}
+
+extension Calendar {
+    func getDateGap(from: Date, to: Date) -> Int {
+        let fromDateOnly = from.onlyDate
+        let toDateOnly = to.onlyDate
+        return self.dateComponents([.day], from: fromDateOnly, to: toDateOnly).day ?? 0
+    }
 }

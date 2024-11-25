@@ -31,19 +31,17 @@ class AuthMacro {
             let response = try await AuthService.register(name: name, birthDate: birthDate, phoneNumber: phoneNumber, household: household)
             
             if KeychainHelper.update(token: response.accessToken, forAccount: "accessToken") {
-                isAuthenticated = true
-                
-                let response = try await AuthService.me()
-                self.me = response
-                
-                return true
             }
             
-            return false
+            isAuthenticated = true
+            
+            self.me = try await AuthService.me()
+            
+            return true
         } catch {
             print(error.localizedDescription)
-            
-            return false
+
+            return true
         }
     }
     

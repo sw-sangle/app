@@ -13,6 +13,7 @@ struct SangleApp: App {
     
     @State private var bottomBarMacro = BottomBarMacro()
     @State private var authMacro = AuthMacro()
+    @State private var ingredientMacro = IngredientMacro()
     
     var body: some Scene {
         WindowGroup {
@@ -27,17 +28,26 @@ struct SangleApp: App {
                     }
             } else {
                 ContentView()
-                    .environment(bottomBarMacro)
-                    .environment(authMacro)
                     .onOpenURL { url in
-                        guard url.scheme! == "sangle-deeplink" &&
+                        guard url.scheme! == "https" &&
                               url.host() == "sangle.apne2a.algorix.cloud",
                               let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
                               let idItem = components.queryItems?.first(where: { $0.name == "id" }),
                               let id = idItem.value else {
                             return
                         }
+                        
+                        ingredientMacro.data.append(
+                            IngredientModel(name: "핫식스", category: "음료", date: Date(), expirationDate: Date.from(year: 2025, month: 3, day: 2))
+                        )
+                        
+                        ingredientMacro.data.append(
+                            IngredientModel(name: "오징어땅콩", category: "과자", date: Date(), expirationDate: Date.from(year: 2025, month: 5, day: 4))
+                        )
                     }
+                    .environment(bottomBarMacro)
+                    .environment(authMacro)
+                    .environment(ingredientMacro)
             }
         }
     }

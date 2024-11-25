@@ -28,11 +28,11 @@ extension String {
            let month = Int(self.dropFirst(4).prefix(2)) ?? 0
            let day = Int(self.dropFirst(6)) ?? 0
            
-           // 현재 년도
-           let currentYear = Calendar.current.component(.year, from: Date())
+//           // 현재 년도
+//           let currentYear = Calendar.current.component(.year, from: Date())
            
            // 유효성 검사
-           return year >= 1900 && year <= currentYear &&  // 1900년 이후, 현재 년도 이전
+           return year >= 1900 &&  // 1900년 이후, 현재 년도 이전
                   month >= 1 && month <= 12 &&           // 1-12월
                   day >= 1 && day <= 31                  // 1-31일
        }

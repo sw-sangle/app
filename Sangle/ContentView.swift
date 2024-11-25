@@ -56,4 +56,5 @@ struct ContentView: View {
     ContentView()
         .environment(BottomBarMacro())
         .environment(AuthMacro())
-}
+        .environment(IngredientMacro())
+} 

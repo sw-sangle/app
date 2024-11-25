@@ -9,7 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sangle-deeplink</string>
+				<string>https</string>
 			</array>
 		</dict>
 	</array>

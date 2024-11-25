@@ -23,11 +23,13 @@ struct HomeScreen: View {
     
     @Environment(BottomBarMacro.self) private var bottomBarMacro
     
-    @State private var expirationDateModel: [IngredientModel] = [
-        IngredientModel(name: "고구마", category: "채소"),
-        IngredientModel(name: "고구마", category: "채소"),
-        IngredientModel(name: "고구마", category: "채소")
-    ]
+    @Environment(IngredientMacro.self) private var ingredientMacro
+    
+//    @State private var expirationDateModel: [IngredientModel] = [
+//        IngredientModel(name: "고구마", category: "채소"),
+//        IngredientModel(name: "고구마", category: "채소"),
+//        IngredientModel(name: "고구마", category: "채소")
+//    ]
     
     var body: some View {
         @Bindable var bottomBarBindable = bottomBarMacro
@@ -120,10 +122,16 @@ struct HomeScreen: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 10) {
-                ForEach(expirationDateModel.indices, id: \.self) { index in
-                    let item = expirationDateModel[index]
+                ForEach(ingredientMacro.data.indices, id: \.self) { index in
+                    let item = ingredientMacro.data[index]
                     
-                    IngredientInfo(content: item, type: .warning, warningDate: (index + 1) * 2 + 1)
+                    if let expirationDate = item.expirationDate {
+                        let gap = Calendar.current.getDateGap(from: Date(), to: expirationDate)
+                    
+                        if gap <= 7 {
+                            IngredientInfo(content: item, type: .warning, warningDate: gap)
+                        }
+                    }
                 }
             }
             .padding(14)
@@ -143,12 +151,7 @@ struct HomeScreen: View {
                 icon: "refrigerator",
                 title: "내 식재료",
                 description: "최신순으로 정렬되어있어요",
-                content: [
-                    IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)),
-                    IngredientModel(name: "당근", category: "채소", date: Date.from(year: 2024, month: 11, day: 22)),
-                    IngredientModel(name: "시금치", category: "채소", date: Date.from(year: 2024, month: 11, day: 23)),
-                ]
-
+                content: Array(ingredientMacro.data.prefix(3))
             )
         }
     }
@@ -195,4 +198,5 @@ struct HomeScreen: View {
 #Preview {
     HomeScreen()
         .environment(BottomBarMacro())
+        .environment(IngredientMacro())
 }

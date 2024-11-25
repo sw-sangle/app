@@ -14,13 +14,11 @@ enum IngredientInfoType {
 struct IngredientInfo: View {
     let content: IngredientModel
     let type: IngredientInfoType
-    let expirationDate: Date?
     let warningDate: Int?
    
-    init(content: IngredientModel, type: IngredientInfoType = .plain, expirationDate: Date? = nil, warningDate: Int? = nil) {
+    init(content: IngredientModel, type: IngredientInfoType = .plain, warningDate: Int? = nil) {
         self.content = content
         self.type = type
-        self.expirationDate = expirationDate
         self.warningDate = warningDate
     }
     
@@ -66,7 +64,7 @@ struct IngredientInfo: View {
                 
                 Spacer()
                 
-                if let expirationDate {
+                if let expirationDate = content.expirationDate {
                     Text("예상 소비기한 \(expirationDate.toKoreanDateString())")
                         .typography(.body2, color: .Gray._500)
                 }
@@ -79,7 +77,7 @@ struct IngredientInfo: View {
     VStack {
         IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)))
         
-        IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), type: .detail, expirationDate: Date.from(year: 2024, month: 12, day: 5))
+        IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21), expirationDate: Date.from(year: 2024, month: 12, day: 5)), type: .detail)
         
         IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), type: .warning, warningDate: 3)
     }

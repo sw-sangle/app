@@ -14,7 +14,6 @@ struct BarcodeScanScreen: View {
     
     var body: some View {
         VStack {
-            Header(title: "바코드 스캔", type: .plain)
             ZStack {
                 BarcodeScannerPreview(scannedCode: $scannedCode)
                 close

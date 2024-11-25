@@ -14,9 +14,15 @@ enum FilterMode {
 struct MyIngredientsScreen: View {
     @Binding var path: NavigationPath
     
+    @StateObject private var nfcManager = NFCSessionManager()
+    
     @State var filterMode: FilterMode = .recent
     
+    @State var isAdded: Bool = false
+    
     private let ingredientsCount: Int = 4
+    
+    @Environment(IngredientMacro.self) private var ingredientMacro
     
     var body: some View {
         VStack {
@@ -32,8 +38,11 @@ struct MyIngredientsScreen: View {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         
                         VStack(spacing: 14) {
-                            ForEach(1...ingredientsCount, id: \.self) { index in
-                                IngredientInfo(content: IngredientModel(name: "고구마", category: "채소", date: Date.from(year: 2024, month: 11, day: 21)), type: .detail, expirationDate: Date.from(year: 2024, month: 12, day: 5))
+                            ForEach(ingredientMacro.data.indices, id: \.self) { index in
+                                let item = ingredientMacro.data[index]
+                                
+                                IngredientInfo(content: item, type: .detail)
+                                
                                 if (index < ingredientsCount) {
                                     RoundedDivider(height: 1)
                                 }
@@ -43,8 +52,11 @@ struct MyIngredientsScreen: View {
                     }
                 }
                 
-                scanFAB
-                    .padding(.bottom, 14)
+                HStack(spacing: 8) {
+                    scanNFC
+                    scanFAB
+                }
+                .padding(.bottom, 14)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -65,7 +77,30 @@ struct MyIngredientsScreen: View {
     
     var storageTips: some View {
         TapButton(action: {
-            path.append(HomeScreenPath.storageTips) }, text: "보관 팁", size: .small, disabled: false, isGold: true)
+            path.append(HomeScreenPath.storageTips) }, text: "보관 팁", size: .small, disabled: false, fill: false, isGold: true)
+    }
+    
+    var scanNFC: some View {
+        VStack() {
+            TapButton(action: {
+                nfcManager.startNFCSession()
+            }, text: "스캔", size: .small, disabled: false, isGold: true)
+        }
+        .padding(.horizontal)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+        .onChange(of: nfcManager.nfcMessage) { _, _ in
+            if !isAdded {
+                ingredientMacro.data.append(
+                    IngredientModel(name: "핫식스", category: "음료", date: Date(), expirationDate: Date.from(year: 2025, month: 3, day: 2))
+                )
+                
+                ingredientMacro.data.append(
+                    IngredientModel(name: "오징어땅콩", category: "과자", date: Date(), expirationDate: Date.from(year: 2025, month: 5, day: 4))
+                )
+                
+                isAdded = true
+            }
+        }
     }
     
     var scanFAB: some View {
@@ -81,4 +116,5 @@ struct MyIngredientsScreen: View {
 
 #Preview {
     MyIngredientsScreen(path: .constant(NavigationPath([HomeScreenPath.ingredients])))
+        .environment(IngredientMacro())
 }

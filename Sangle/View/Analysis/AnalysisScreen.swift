@@ -124,7 +124,7 @@ struct AnalysisScreen: View {
                 
             }
             .padding(14)
-            .frame(width: .infinity, alignment: .topLeading)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
             .background(Color.Gray._200)
             .cornerRadius(16)
         }
